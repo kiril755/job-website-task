@@ -18,31 +18,31 @@ const JobList = () => {
   localStorage.setItem("postedDays", "");
   localStorage.setItem("corectCity", "");
 
-  React.useEffect(() => {
-    setJobDetail(jobs);
-    setCoordinates(jobs.map((data) => data.location));
-  }, []);
+  // React.useEffect(() => {
+  //   setJobDetail(jobs);
+  //   setCoordinates(jobs.map((data) => data.location));
+  // }, []);
 
   function renderPerPage(jobArr) {
     setJobPerPage(jobArr);
   }
 
   //////////////////////////////////////////////////////
-  // React.useEffect(() => {
-  //   async function fetchJobList() {
-  //     try {
-  //       const { data } = await axios.get(
-  //         "https://api.json-generator.com/templates/ZM1r0eic3XEy/data?access_token=wm3gg940gy0xek1ld98uaizhz83c6rh2sir9f9fu"
-  //       );
+  React.useEffect(() => {
+    async function fetchJobList() {
+      try {
+        const { data } = await axios.get(
+          "https://api.json-generator.com/templates/ZM1r0eic3XEy/data?access_token=wm3gg940gy0xek1ld98uaizhz83c6rh2sir9f9fu"
+        );
 
-  //       setJobDetail(data);
-  //       setCoordinates(data.map((data) => data.location));
-  //     } catch (error) {
-  //       alert("Ошибка");
-  //     }
-  //   }
-  //   fetchJobList();
-  // }, []);
+        setJobDetail(data);
+        setCoordinates(data.map((data) => data.location));
+      } catch (error) {
+        alert("Ошибка");
+      }
+    }
+    fetchJobList();
+  }, []);
   ////////////////////////////////////////////////////
 
   const isItCountry = (properties) => {
@@ -68,38 +68,35 @@ const JobList = () => {
     screenWidthCheck(751);
   });
   //////////////////////////////////////////////
-  // let cityArr = [];
-  // React.useEffect(() => {
-  //   if (coordinates) {
-  //     coordinates.map((cord) => {
-  //       async function gets() {
-  //         try {
-  //           // const { data } = await axios.get(
-  //           //   `https://maps.googleapis.com/maps/api/geocode/json?latlng=${cord.lat},${cord.long}&key=AIzaSyCRAcukBhdo2hyEC54viydDy1RZpIEPzNo`
-  //           // );
-  //           const { data } = await axios.get(
-  //             `https://api.geoapify.com/v1/geocode/reverse?lat=${cord.lat}&lon=${cord.long}&apiKey=9f29b56b584b436e893eac380bcf1110`
-  //           );
+  let cityArr = [];
+  React.useEffect(() => {
+    if (coordinates) {
+      coordinates.map((cord) => {
+        async function gets() {
+          try {
+            const { data } = await axios.get(
+              `https://api.geoapify.com/v1/geocode/reverse?lat=${cord.lat}&lon=${cord.long}&apiKey=9f29b56b584b436e893eac380bcf1110`
+            );
 
-  //           cityArr.push(isItCountry(data.features[0].properties));
+            cityArr.push(isItCountry(data.features[0].properties));
 
-  //           setCity(cityArr);
+            setCity(cityArr);
 
-  //           if (cityArr.length > 19) {
-  //             setLoadingLayout(true);
-  //           }
-  //         } catch (error) {
-  //           console.log(error);
-  //         }
-  //       }
-  //       gets();
-  //     });
-  //   }
-  // }, [coordinates]);
+            if (cityArr.length > 19) {
+              setLoadingLayout(true);
+            }
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        gets();
+      });
+    }
+  }, [coordinates]);
 
-  // if (!loadingLayout) {
-  //   return <>loading...</>;
-  // }
+  if (!loadingLayout) {
+    return <>loading...</>;
+  }
   //////////////////////////////////////////////////
 
   const postedDays = (createdDate, updatedDate) => {
@@ -137,9 +134,7 @@ const JobList = () => {
       const mobTitleLayout = arrString.join(" ");
 
       if (mobTitleLayout[mobTitleLayout.length - 1] === ",") {
-        console.log(mobTitleLayout);
         const clearString = mobTitleLayout.slice(0, -1);
-        console.log(clearString);
         return (
           <>
             <h2 className="short-info-title">{clearString}</h2>
@@ -179,7 +174,6 @@ const JobList = () => {
                     <ul className="short-info-list">
                       <li className="short-info-item">
                         {jobTitleWidthLayout(screenWidth, job.title)}
-                        {/* <h2 className="short-info-title">{job.title}</h2> */}
                       </li>
                       <li className="short-info-item">
                         <p className="short-info-Department">{job.name}</p>
@@ -201,8 +195,7 @@ const JobList = () => {
                           />
                         </svg>
 
-                        {/* <p className="short-info-location">{city[i]}</p> */}
-                        <p className="short-info-location">Kyiv, Ukraine</p>
+                        <p className="short-info-location">{city[i]}</p>
                       </li>
                     </ul>
                   </div>

@@ -10,7 +10,6 @@ const DetailedJob = () => {
   const PostedDays = localStorage.getItem("postedDays");
   const cityData = localStorage.getItem("corectCity");
 
-  const [map, setMap] = useState();
   const [screenWidth, setScreenWidth] = useState("desc");
   const [bottomPageLayout, setBottomPageLayout] = useState("");
   const [topPageLayout, setTopPageLayout] = useState("");
@@ -335,12 +334,11 @@ const DetailedJob = () => {
         <div className="map-gradient">
           <img
             className="map-img"
-            src="https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:30.524136,50.450034&zoom=17&marker=lonlat:30.524136,50.450034;type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110"
-            // src={
-            //   cityData.includes("Kyiv")
-            //     ? "https://maps.geoapify.com/v1/staticmap?style=osm-bright-smooth&width=402&height=218&center=lonlat:30.524136,50.450034&zoom=14&marker=lonlat:30.524136,50.450034;type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110"
-            //     : `https://maps.geoapify.com/v1/staticmap?style=positron-blue&width=402&height=218&center=lonlat:${parseData.location.long},${parseData.location.lat}&zoom=14&marker=lonlat:${parseData.location.long},${parseData.location.lat};type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110`
-            // }
+            src={
+              cityData.includes("Kyiv")
+                ? "https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:30.524136,50.450034&zoom=17&marker=lonlat:30.524136,50.450034;type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110"
+                : `https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:${parseData.location.long},${parseData.location.lat}&zoom=17&marker=lonlat:${parseData.location.long},${parseData.location.lat};type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110`
+            }
             alt="map"
           />
         </div>
