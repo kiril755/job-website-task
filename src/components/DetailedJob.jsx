@@ -87,7 +87,6 @@ const DetailedJob = () => {
   };
 
   React.useEffect(() => {
-    console.log(window.screen.width);
     screenWidthCheck(1160);
   }, []);
 
@@ -226,6 +225,13 @@ const DetailedJob = () => {
     topOfTheJob(screenWidth);
   }, [screenWidth]);
 
+  function whichCityIs(city) {
+    if (city.includes("Kyiv")) {
+      return "https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:30.524136,50.450034&zoom=17&marker=lonlat:30.524136,50.450034;type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110";
+    }
+    return `https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:${parseData.location.long},${parseData.location.lat}&zoom=17&marker=lonlat:${parseData.location.long},${parseData.location.lat};type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110`;
+  }
+
   return (
     <div className="container container-detailed-job">
       <div className="job-detail">
@@ -332,13 +338,15 @@ const DetailedJob = () => {
           </p>
         </div>
         <div className="map-gradient">
+          <div className="map-background"></div>
           <img
             className="map-img"
-            src={
-              cityData.includes("Kyiv")
-                ? "https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:30.524136,50.450034&zoom=17&marker=lonlat:30.524136,50.450034;type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110"
-                : `https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:${parseData.location.long},${parseData.location.lat}&zoom=17&marker=lonlat:${parseData.location.long},${parseData.location.lat};type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110`
-            }
+            src={whichCityIs(cityData)}
+            // src={
+            //   cityData.includes("Kyiv")
+            //     ? "https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:30.524136,50.450034&zoom=17&marker=lonlat:30.524136,50.450034;type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110"
+            //     : `https://maps.geoapify.com/v1/staticmap?style=dark-matter&width=402&height=218&center=lonlat:${parseData.location.long},${parseData.location.lat}&zoom=17&marker=lonlat:${parseData.location.long},${parseData.location.lat};type:material;color:%23d8d8d8;icon:directions-boat;icontype:awesome&apiKey=9f29b56b584b436e893eac380bcf1110`
+            // }
             alt="map"
           />
         </div>
